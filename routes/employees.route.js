@@ -6,14 +6,29 @@ const router = express.Router();
 //To get all employees
 router.get('/employees', (req, res) => {
     try{
-        Employees.find((err, data) => {
-            if(err){
-                return res.status(400).send({message: 'Error while retrieving employees details.'});
-            }
+        const { email } = req.query;
+        
+        if(email){
+            Employees.find({email}, (err, data) => {
+                if(err){
+                    return res.status(400).send({message: 'Error while retrieving employees details.'});
+                }
+    
+                return res.status(200).send(data);
+    
+            })
+        }else{
+            Employees.find((err, data) => {
+                if(err){
+                    return res.status(400).send({message: 'Error while retrieving employees details.'});
+                }
+    
+                return res.status(200).send(data);
+    
+            })
+        }
 
-            return res.status(200).send(data);
-
-        })
+        
     }catch(error){
         res.status(500).send({message: 'Internal Server Error'});
     }
