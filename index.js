@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const db = require('./db/connect');
 
 //Importing routes;
@@ -12,6 +13,8 @@ db();
 
 //To parse JSON objects
 app.use(express.json()); 
+app.use(cors());
+
 
 app.get('/', (req, res) => {
     res.send('Welcome to my App');
